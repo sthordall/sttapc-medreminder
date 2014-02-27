@@ -37,7 +37,6 @@ public class MotionHandler {
 
 		@Override
 		public void sensorChanged(SensorChangeEvent arg0) {
-			sensitivity++;
 			if (doHandleEvent()) {
 				HandleEvent(stateProvider.getState());
 			}
