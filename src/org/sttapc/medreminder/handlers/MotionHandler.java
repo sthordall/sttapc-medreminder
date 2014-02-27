@@ -10,8 +10,6 @@ import org.sttapc.medreminder.util.Reminder;
 import com.phidgets.event.SensorChangeEvent;
 import com.phidgets.event.SensorChangeListener;
 
-// TODO: Add some kind of sensitivity adjustment
-
 /**
  * Handles everything associated with the motionsensor.
  */
@@ -43,7 +41,7 @@ public class MotionHandler {
 		}
 	};
 
-	private SensorChangeListener getSensorChangeListener() {
+	public SensorChangeListener getSensorChangeListener() {
 		return sensorChangeListener;
 	}
 

@@ -1,10 +1,12 @@
 package org.sttapc.medreminder.util;
 
+import org.sttapc.medreminder.context.State;
 import org.sttapc.medreminder.context.StateProvider;
 
-// TODO: Handle user configuration
+// TODO: Persist an load data via JSON.
 
 public class Configurator {
+
 	/*
 	 * Configuration associated with MotionSensor
 	 */
@@ -16,7 +18,7 @@ public class Configurator {
 		return motionSensitivity;
 	}
 
-	public void setMotionSensitivity(int motionSensitivity) {
+	private void setMotionSensitivity(int motionSensitivity) {
 		this.motionSensitivity = motionSensitivity;
 	}
 
@@ -24,8 +26,16 @@ public class Configurator {
 		return motionSensitivityReset;
 	}
 
-	public void setMotionSensitivityReset(int motionSensitivityReset) {
+	private void setMotionSensitivityReset(int motionSensitivityReset) {
 		this.motionSensitivityReset = motionSensitivityReset;
+	}
+
+	public void setupMotionHandler() {
+		getStateProvider().setState(State.CONFIGURING);
+		// TODO: Load motionhandler setup data from some JSON
+		// setMotionSensitivity(motionSensitivityFromJSON);
+		// setMotionSensitivityReset(motionSensitivityResetFromJSON);
+		getStateProvider().setState(State.ACTIVE);
 	}
 
 	/*
