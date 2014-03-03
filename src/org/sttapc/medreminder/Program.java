@@ -1,5 +1,9 @@
 package org.sttapc.medreminder;
 
+import java.io.IOException;
+
+import org.sttapc.medreminder.util.Initializer;
+
 import com.phidgets.InterfaceKitPhidget;
 import com.phidgets.PhidgetException;
 import com.phidgets.event.AttachEvent;
@@ -54,13 +58,11 @@ public class Program {
 	};
 
 	public static void main(String[] args) {
-
+		Initializer initializer = new Initializer();
 		try {
-			interfaceKitPhidget = new InterfaceKitPhidget();
-			interfaceKitPhidget.addAttachListener(attachListener);
-			interfaceKitPhidget.openAny();
-			interfaceKitPhidget.waitForAttachment();
-		} catch (Exception e) {
+			initializer.setupConfigurator("resources/configurator.json");
+			initializer.persistConfigurator("resources/configurator.json");
+		} catch (IOException e) {
 			HandleException(e);
 		}
 	}
