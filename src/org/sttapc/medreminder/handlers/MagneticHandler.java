@@ -2,7 +2,11 @@ package org.sttapc.medreminder.handlers;
 
 import java.util.Date;
 
+import javax.xml.transform.TransformerException;
+
+import org.sttapc.medreminder.context.Adherence;
 import org.sttapc.medreminder.context.Logning;
+import org.sttapc.medreminder.context.State;
 import org.sttapc.medreminder.context.StateProvider;
 import org.sttapc.medreminder.util.Configurator;
 import org.sttapc.medreminder.util.Reminder;
@@ -27,31 +31,14 @@ public class MagneticHandler {
 	private Date newestDetectionDate;
 	private Schedule schedule;
 	private Logning logning;
+	Adherence adherence;
 	
 	// States
 	//private StateProvider stateProvider;
 	private Reminder reminder;
 
 	/*------------------------------Constructors-------------------------------------------*/
-
-	public MagneticHandler(InterfaceKitPhidget interfaceKitPhidget) throws PhidgetException {
-		this.interfaceKitPhidget = interfaceKitPhidget;
-		outputOne = 1;
-		outputTwo = 0;
-		
-		System.out.println("MagneticHandler instantiated...");
-	}
 	
-	//Test ONLY (can be removed but TestProgram might fail)
-	public MagneticHandler(InterfaceKitPhidget interfaceKitPhidget, Schedule schedule) throws PhidgetException {
-		this.interfaceKitPhidget = interfaceKitPhidget;
-		outputOne = 1;
-		outputTwo = 0;
-		
-		this.schedule = schedule;
-		
-		System.out.println("MagneticHandler instantiated...");
-	}
 
 	public MagneticHandler(InterfaceKitPhidget interfaceKitPhidget, Configurator configurator)
 			throws PhidgetException {
@@ -62,6 +49,7 @@ public class MagneticHandler {
 		
 		this.schedule = configurator.getSchedule();
 		this.logning = configurator.getLogning();
+		adherence = new Adherence(configurator.getSchedule());
 		
 		System.out.println("MagneticHandler instantiated...");
 	}
@@ -123,7 +111,12 @@ public class MagneticHandler {
 		 */
 		case ACTIVE:
 				StateProvider.getInstance().setState(org.sttapc.medreminder.context.State.IDLE);
-				logning.LogOnActiveAndWithinSchedule();
+			try {
+				logning.LogForMagneticHandler(currentTime, State.ACTIVE, adherence.CalculatePoints(currentTime));
+			} catch (TransformerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 				break;
 		/* 
 		 * If Case is opened in IDLE state, it should not do nothing.

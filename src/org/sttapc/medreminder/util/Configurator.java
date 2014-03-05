@@ -1,5 +1,6 @@
 package org.sttapc.medreminder.util;
 
+import org.sttapc.medreminder.context.Adherence;
 import org.sttapc.medreminder.context.Schedule;
 import org.sttapc.medreminder.context.Logning;
 import org.sttapc.medreminder.context.StateProvider;
@@ -59,20 +60,6 @@ public class Configurator {
 
 	public void setOutputTwo(int outputTwo) {
 		this.outputTwo = outputTwo;
-	}
-	
-	/*
-	 * Configuration associated with Adherence
-	 */
-	
-	int Points; 
-
-	public int getPoints() {
-		return Points;
-	}
-
-	public void setPoints(int points) {
-		Points = points;
 	}
 
 	/*
