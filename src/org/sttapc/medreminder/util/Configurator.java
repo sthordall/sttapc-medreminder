@@ -1,6 +1,7 @@
 package org.sttapc.medreminder.util;
 
 import org.sttapc.medreminder.context.Schedule;
+import org.sttapc.medreminder.context.Logning;
 import org.sttapc.medreminder.context.StateProvider;
 
 public class Configurator {
@@ -26,6 +27,52 @@ public class Configurator {
 
 	public void setMotionSensitivityReset(int motionSensitivityReset) {
 		this.motionSensitivityReset = motionSensitivityReset;
+	}
+	
+	/*
+	 * Configuration associated with MagneticHandler
+	 */
+	
+	int outputOne = -1;
+	int outputTwo = -1;
+	private Logning logning;
+	
+	public Logning getLogning() {
+		return logning;
+	}
+
+	public void setLogning(Logning logning) {
+		this.logning = logning;
+	}
+
+	public int getOutputOne() {
+		return outputOne;
+	}
+
+	public void setOutputOne(int outputOne) {
+		this.outputOne = outputOne;
+	}
+
+	public int getOutputTwo() {
+		return outputTwo;
+	}
+
+	public void setOutputTwo(int outputTwo) {
+		this.outputTwo = outputTwo;
+	}
+	
+	/*
+	 * Configuration associated with Adherence
+	 */
+	
+	int Points; 
+
+	public int getPoints() {
+		return Points;
+	}
+
+	public void setPoints(int points) {
+		Points = points;
 	}
 
 	/*

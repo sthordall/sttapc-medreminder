@@ -2,12 +2,11 @@ package org.sttapc.medreminder.handlers;
 
 import java.util.Date;
 
+import org.sttapc.medreminder.context.Logning;
 import org.sttapc.medreminder.context.StateProvider;
 import org.sttapc.medreminder.util.Configurator;
 import org.sttapc.medreminder.util.Reminder;
-import org.sttapc.medreminder.util.Schedule;
-
-import apple.laf.JRSUIConstants.State;
+import org.sttapc.medreminder.context.Schedule;
 
 import com.phidgets.InterfaceKitPhidget;
 import com.phidgets.PhidgetException;
@@ -27,6 +26,7 @@ public class MagneticHandler {
 	private Date latestDetectionDate;
 	private Date newestDetectionDate;
 	private Schedule schedule;
+	private Logning logning;
 	
 	// States
 	//private StateProvider stateProvider;
@@ -34,23 +34,34 @@ public class MagneticHandler {
 
 	/*------------------------------Constructors-------------------------------------------*/
 
+	public MagneticHandler(InterfaceKitPhidget interfaceKitPhidget) throws PhidgetException {
+		this.interfaceKitPhidget = interfaceKitPhidget;
+		outputOne = 1;
+		outputTwo = 0;
+		
+		System.out.println("MagneticHandler instantiated...");
+	}
+	
+	//Test ONLY (can be removed but TestProgram might fail)
 	public MagneticHandler(InterfaceKitPhidget interfaceKitPhidget, Schedule schedule) throws PhidgetException {
 		this.interfaceKitPhidget = interfaceKitPhidget;
 		outputOne = 1;
 		outputTwo = 0;
+		
 		this.schedule = schedule;
 		
 		System.out.println("MagneticHandler instantiated...");
 	}
 
-	public MagneticHandler(InterfaceKitPhidget interfaceKitPhidget, int outputOne, int outputTwo, Schedule schedule)
+	public MagneticHandler(InterfaceKitPhidget interfaceKitPhidget, Configurator configurator)
 			throws PhidgetException {
 
 		this.interfaceKitPhidget = interfaceKitPhidget;
-		interfaceKitPhidget.setOutputState(outputOne, false);
-		interfaceKitPhidget.setOutputState(outputTwo, false);
+		interfaceKitPhidget.setOutputState(configurator.getOutputOne(), false);
+		interfaceKitPhidget.setOutputState(configurator.getOutputTwo(), false);
 		
-		this.schedule = schedule;
+		this.schedule = configurator.getSchedule();
+		this.logning = configurator.getLogning();
 		
 		System.out.println("MagneticHandler instantiated...");
 	}
@@ -96,38 +107,36 @@ public class MagneticHandler {
 	 * Depending on what state the system is in, it has to handle coordinately
 	 * This method is responsible for handling to a corresponding state
 	 * TODO: This method should be called after validation of correct user interaction
+	 * example: If user wants to refill his case. If user accidentially opens it without
+	 * taking the medication.
 	 * 
-	 * 
-	 * If that is not implemented this should be handled in each switch case.
 	 */
 	private void HandleState(){
 		Date currentTime =  new Date();
 		org.sttapc.medreminder.context.State currentState = StateProvider.getInstance().getState();
 		switch(currentState){
-		/* If it is in active state, and is within the schedule,
+		/* 
+		 * If this State is triggered, it means that user has opened the case
+		 * within the ACTIVE state. We assume the user is taking the medicine
 		 * it changes state to IDLE
 		 * Log info to a xml file.
 		 */
 		case ACTIVE:
-			if(schedule.getLowerDateInterval().before(currentTime) && schedule.getUpperDateInterval().after(currentTime)){
 				StateProvider.getInstance().setState(org.sttapc.medreminder.context.State.IDLE);
-				LogOnActiveAndWithinSchedule();
+				logning.LogOnActiveAndWithinSchedule();
 				break;
-			}
-			else{
-				StateProvider.getInstance().setState(org.sttapc.medreminder.context.State.WARNING); //WARNING? IDLE?
-				LogOnActiveAndNotWithinSchedule();
-				break;
-			}
-		/* If in IDLE state, this means the patients has opened
-		 * the case outside the schedule. This does not necessarily means
-		 * that the patients is about to take the medicine
-		 * THis is because we handle,
-		 * 
+		/* 
+		 * If Case is opened in IDLE state, it should not do nothing.
+		 * Maybe Log it ?
 		 */
 		case IDLE:
 			break;
+		/*
+		 * If the user opens in WARNING state, he is outside of the schedule for
+		 * taking his medicine
+		 * */
 		case WARNING:
+			StateProvider.getInstance().setState(org.sttapc.medreminder.context.State.IDLE);
 			break;
 		default:
 			break;
@@ -170,14 +179,6 @@ public class MagneticHandler {
 			
 		}
 	}
-	
-	private void LogOnActiveAndWithinSchedule(){
-		
-	}
-	
-	private void LogOnActiveAndNotWithinSchedule(){
-		
-	}
 		
 	/**
 	 * If the user leaves the case opened, we can not correctly 
@@ -203,5 +204,4 @@ public class MagneticHandler {
 	public void setInputData(boolean inputData) {
 		this.inputData = inputData;
 	}
-	/*------------------------------Getters and Setters-------------------------------------------*/
 }
