@@ -1,31 +1,44 @@
 package org.sttapc.medreminder;
 
+import java.util.Date;
+
 import org.sttapc.medreminder.handlers.MagneticHandler;
+import org.sttapc.medreminder.util.Schedule;
+
+import com.phidgets.InterfaceKitPhidget;
+import com.phidgets.PhidgetException;
 
 public class TestProgram {
 	static MagneticHandler magnetichandler;
-	//
-	//
-	// public static void main(String[] args) {
-	//
-	// try {
-	// Initializer init = new Initializer();
-	//
-	// Initializer.getCurrentTime();
-	// InterfaceKitPhidget interfaceKitPhidget = new InterfaceKitPhidget();
-	// System.out.println("Starting up....");
-	// magnetichandler = new MagneticHandler(interfaceKitPhidget);
-	// //magnetichandler.AttachMagneticHandler();
-	// interfaceKitPhidget.addInputChangeListener(magnetichandler.getInputChangeListener());
-	// interfaceKitPhidget.openAny();
-	// interfaceKitPhidget.waitForAttachment();
-	//
-	//
-	// } catch (PhidgetException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// }
+	Date lowerDate = new Date();
+	Date upperDate = new Date();
+
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) {
+		Date lowerDate = new Date();
+		Date upperDate = new Date();
+		try {
+			lowerDate.setHours(10);
+			lowerDate.setMinutes(0);
+			upperDate.setHours(11);
+			upperDate.setMinutes(0);
+
+			Schedule schedule = new Schedule(lowerDate, upperDate);
+
+			InterfaceKitPhidget interfaceKitPhidget = new InterfaceKitPhidget();
+			System.out.println("Starting up....");
+			magnetichandler = new MagneticHandler(interfaceKitPhidget, schedule);
+			// magnetichandler.AttachMagneticHandler();
+			interfaceKitPhidget.addInputChangeListener(magnetichandler
+					.getInputChangeListener());
+			interfaceKitPhidget.openAny();
+			interfaceKitPhidget.waitForAttachment();
+
+		} catch (PhidgetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 }

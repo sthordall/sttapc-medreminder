@@ -4,6 +4,16 @@ public class StateProvider {
 	private static StateProvider instance = null;
 
 	private State state;
+	private boolean IsCaseClosed = false;
+	
+
+	public boolean isCaseClosed() {
+		return IsCaseClosed;
+	}
+
+	public void setIsCaseClosed(boolean IsCaseClosed) {
+		this.IsCaseClosed = IsCaseClosed;
+	}
 
 	private StateProvider() {
 	}
