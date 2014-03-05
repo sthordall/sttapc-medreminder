@@ -1,5 +1,6 @@
 package org.sttapc.medreminder.util;
 
+import org.sttapc.medreminder.context.Schedule;
 import org.sttapc.medreminder.context.StateProvider;
 
 public class Configurator {
@@ -25,6 +26,19 @@ public class Configurator {
 
 	public void setMotionSensitivityReset(int motionSensitivityReset) {
 		this.motionSensitivityReset = motionSensitivityReset;
+	}
+
+	/*
+	 * Configuration associated with Schedule
+	 */
+	private Schedule schedule;
+
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
 
 	/*
