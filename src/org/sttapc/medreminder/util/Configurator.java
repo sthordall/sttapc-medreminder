@@ -29,7 +29,7 @@ public class Configurator {
 	}
 
 	/*
-	 * Configuration associated with Schedule
+	 * Configuration associated with Adherence 
 	 */
 	private Schedule schedule;
 

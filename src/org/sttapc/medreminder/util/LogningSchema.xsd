@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/LogningSchema" xmlns:tns="http://www.example.org/LogningSchema" elementFormDefault="qualified">
+
+	<element name="PillTaken" type="tns:pilltaken" />
+	<complexType name="pilltaken">
+		<all>
+			<element ref="tns:TimeAndDate" />
+			<element ref="tns:State" />
+			<element ref="tns:Points" />
+		</all>
+	</complexType>
+
+	<element name="userName" type="string" />
+	<element name="userEmail" type="string" />
+	
+	<element name="State" type="string" />
+	<element name="TimeAndDate" type="string" />
+	
+	<element name="Points" type="nonNegativeInteger" />
+	<element name="Reminder" type="string" />
+
+</schema>
+
