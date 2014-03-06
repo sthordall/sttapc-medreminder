@@ -28,15 +28,10 @@ public class MagneticHandler {
 	int outputOne = -1;
 	int outputTwo = -1;
 	private boolean inputData;
-	private Date latestDetectionDate;
-	private Date newestDetectionDate;
 	private Schedule schedule;
 	private Logning logning;
 	Adherence adherence;
 
-	// States
-	// private StateProvider stateProvider;
-	private Reminder reminder;
 
 	/*------------------------------Constructors-------------------------------------------*/
 
@@ -76,7 +71,9 @@ public class MagneticHandler {
 			// case and thereby taken his medicine?
 			// CaseIsOpened(arg0.getState());
 			// IfCaseIsClosedRightAfter();
-			HandleState();
+			if(arg0.getState() == false){
+				HandleState();
+			}			
 		}
 	};
 
@@ -164,10 +161,10 @@ public class MagneticHandler {
 	 * the event was executed StateProvider contains info on if case is
 	 * closed/opened false: case closed, true: case opened
 	 */
-	private void CaseIsOpened(boolean input) {
-		latestDetectionDate = new Date();
-		StateProvider.getInstance().setIsCaseClosed(input);
-	}
+//	private void CaseIsOpened(boolean input) {
+//		latestDetectionDate = new Date();
+//		StateProvider.getInstance().setIsCaseClosed(input);
+//	}
 
 	/**
 	 * If the user immediately close the case right after opening, it would mean
@@ -177,9 +174,9 @@ public class MagneticHandler {
 	 * if case is still not closed. This makes the magnetic sensor independent
 	 * of other sensors
 	 */
-	private void IfCaseIsClosedRightAfter() {
-
-	}
+//	private void IfCaseIsClosedRightAfter() {
+//
+//	}
 
 	/**
 	 * (THIS METHOD MIGHT BE SPLIT INTO SEPERATE METHODS) This method shall
@@ -187,20 +184,20 @@ public class MagneticHandler {
 	 * taken medicine TODO((Only log on valid user interaction(ex. not log when
 	 * case is opened and closed immediately after))
 	 */
-	private void LogInfo(org.sttapc.medreminder.context.State state,
-			boolean IsWithinSchedule) {
-		if (state == state.ACTIVE && IsWithinSchedule) {
-
-		}
-	}
+//	private void LogInfo(org.sttapc.medreminder.context.State state,
+//			boolean IsWithinSchedule) {
+//		if (state == state.ACTIVE && IsWithinSchedule) {
+//
+//		}
+//	}
 
 	/**
 	 * If the user leaves the case opened, we can not correctly determine if the
 	 * user actually taken out the medicine
 	 */
-	private void AlarmUserToCloseCase() {
-
-	}
+//	private void AlarmUserToCloseCase() {
+//
+//	}
 
 	/*------------------------------Getters and Setters-------------------------------------------*/
 	public int getOutputOne() {
