@@ -1,11 +1,10 @@
 package org.sttapc.medreminder.util;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.Scanner;
 
 import org.sttapc.medreminder.context.LifeCycle;
 import org.sttapc.medreminder.handlers.MagneticHandler;
@@ -39,11 +38,18 @@ public class Initializer {
 	 */
 	public void setupConfigurator(String configuratorPath) throws IOException {
 		Gson gson = new Gson();
-
-		byte[] encoded = Files.readAllBytes(Paths.get(configuratorPath));
-		String jsonString = StandardCharsets.UTF_8.decode(
-				ByteBuffer.wrap(encoded)).toString();
-
+		String jsonString = "";
+		try {
+			Scanner scanner = new Scanner(new File(
+					"resources/configurator.json"));
+			while (scanner.hasNext()) {
+				jsonString += scanner.next();
+				jsonString += " ";
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		configurator = gson.fromJson(jsonString, Configurator.class);
 	}
 
