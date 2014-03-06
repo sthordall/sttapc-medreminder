@@ -26,7 +26,7 @@ public class LifeCycle {
 
 	public LifeCycle(Configurator configurator) {
 		schedule = configurator.getSchedule();
-		stateProvider = configurator.getStateProvider();
+		stateProvider = StateProvider.getInstance();
 	}
 
 	/**
@@ -34,6 +34,7 @@ public class LifeCycle {
 	 * to the supplied schedule
 	 */
 	public void startLifeCycle() {
+		stateProvider.setState(State.ACTIVE);
 		startIdleStateTimerTask = new TimerTask() {
 			@Override
 			public void run() {

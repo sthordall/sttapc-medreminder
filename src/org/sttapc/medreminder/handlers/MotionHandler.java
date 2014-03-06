@@ -48,24 +48,26 @@ public class MotionHandler {
 	public MotionHandler(Configurator configurator) {
 		sensitivity = configurator.getMotionSensitivity();
 		sensitivityReset = configurator.getMotionSensitivityReset();
-		stateProvider = configurator.getStateProvider();
+		stateProvider = StateProvider.getInstance();
 		reminder = configurator.getReminder();
 		latestDetectionDate = new Date();
 		detectionCounter = 0;
 	}
 
 	private void HandleEvent(State state) {
-		if (doHandleEvent()) {
-			switch (state) {
-			case ACTIVE:
-				reminder.NearbyActiveReminder();
-				break;
-			case WARNING:
-				reminder.NearbyWarningReminder();
-				break;
-			default:
-				break;
-			}
+		System.out.println("MotionHandler: Handling motion - " + state);
+		switch (state) {
+		case IDLE:
+
+			break;
+		case ACTIVE:
+			reminder.NearbyActiveReminder();
+			break;
+		case WARNING:
+			reminder.NearbyWarningReminder();
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -78,7 +80,7 @@ public class MotionHandler {
 	private boolean doHandleEvent() {
 		Date newDetectionDate = new Date();
 		long diff = newDetectionDate.getTime() - latestDetectionDate.getTime();
-		long diffSeconds = diff / 1000 % 60;
+		long diffSeconds = diff / 1000;
 
 		if (diffSeconds >= sensitivityReset) {
 			detectionCounter = 0;

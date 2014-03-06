@@ -1,16 +1,48 @@
 package org.sttapc.medreminder;
 
-import org.sttapc.medreminder.util.Reminder;
+import java.util.Date;
+
+import org.sttapc.medreminder.context.Logning;
+import org.sttapc.medreminder.context.Schedule;
+import org.sttapc.medreminder.util.Configurator;
+import org.sttapc.medreminder.util.Initializer;
 
 public class Program {
 
 	public static void main(String[] args) {
-		Reminder reminder = new Reminder();
-		try {
-			reminder.NearbyActiveReminder();
-		} catch (Exception e) {
-			HandleException(e);
-		}
+
+		Configurator configurator = new Configurator();
+		configurator.setSchedule(new Schedule(new Date()));
+		configurator.setLogning(new Logning());
+		Initializer initializer = new Initializer();
+		initializer.setConfigurator(configurator);
+		initializer.persistConfigurator("resources/configurator1.json");
+
+		//
+		// try {
+		// final InterfaceKitPhidget interfaceKitPhidget = new
+		// InterfaceKitPhidget();
+		// interfaceKitPhidget.addAttachListener(new AttachListener() {
+		//
+		// @Override
+		// public void attached(AttachEvent arg0) {
+		// try {
+		// System.out.println("InterfaceKit Attached");
+		// Sound sound = new Sound(interfaceKitPhidget, 0);
+		// sound.PlaySound(440);
+		// } catch (Exception e) {
+		// HandleException(e);
+		// }
+		//
+		// }
+		// });
+		// interfaceKitPhidget.openAny();
+		// while (true) {
+		//
+		// }
+		// } catch (Exception e) {
+		// HandleException(e);
+		// }
 	}
 
 	public static void HandleException(Exception e) {

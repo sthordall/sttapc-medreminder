@@ -1,8 +1,7 @@
 package org.sttapc.medreminder.util;
 
-import org.sttapc.medreminder.context.Adherence;
-import org.sttapc.medreminder.context.Schedule;
 import org.sttapc.medreminder.context.Logning;
+import org.sttapc.medreminder.context.Schedule;
 import org.sttapc.medreminder.context.StateProvider;
 
 public class Configurator {
@@ -29,15 +28,15 @@ public class Configurator {
 	public void setMotionSensitivityReset(int motionSensitivityReset) {
 		this.motionSensitivityReset = motionSensitivityReset;
 	}
-	
+
 	/*
 	 * Configuration associated with MagneticHandler
 	 */
-	
+
 	int outputOne = -1;
 	int outputTwo = -1;
 	private Logning logning;
-	
+
 	public Logning getLogning() {
 		return logning;
 	}
@@ -63,7 +62,7 @@ public class Configurator {
 	}
 
 	/*
-	 * Configuration associated with Adherence 
+	 * Configuration associated with Adherence
 	 */
 	private Schedule schedule;
 

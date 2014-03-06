@@ -1,33 +1,30 @@
 package org.sttapc.medreminder.context;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
-import org.jdom2.output.XMLOutputter;
-import org.sttapc.medreminder.util.Configurator;
 
 public class Logning {
 
-	public void LogForMagneticHandler(Date date, State state, int points) throws TransformerException {
-		Document document = GenerateDocumentForMagneticHandler(date, state, points);
+	public void LogForMagneticHandler(Date date, State state, int points)
+			throws TransformerException {
+		Document document = GenerateDocumentForMagneticHandler(date, state,
+				points);
 		SaveDocumentToXmlFule(document, "resources/MagneticLoggning.xml");
 	}
-	
-	public void LogForMotionHandler(Date date, State state) throws TransformerException{
+
+	public void LogForMotionHandler(Date date, State state)
+			throws TransformerException {
 		Document document = GenerateDocumentForMotionHandler(date, state);
 		SaveDocumentToXmlFule(document, "resources/MotionLogning.xml");
 	}
@@ -42,15 +39,15 @@ public class Logning {
 		StreamResult result = new StreamResult(new File(filePath));
 
 		// Output to console for testing
-		//StreamResult result = new StreamResult(System.out);
+		// StreamResult result = new StreamResult(System.out);
 
 		transformer.transform(source, result);
 
 		System.out.println("File saved!");
 	}
-	
-	private Document ReadXmlFile(DocumentBuilder docBuilder, String filePath){
-        Document document;
+
+	private Document ReadXmlFile(DocumentBuilder docBuilder, String filePath) {
+		Document document;
 		try {
 			document = docBuilder.parse(filePath);
 			return document;
@@ -60,35 +57,34 @@ public class Logning {
 		}
 	}
 
-	private Document GenerateDocumentForMotionHandler(Date date, State state){
+	private Document GenerateDocumentForMotionHandler(Date date, State state) {
 		try {
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory
-				.newInstance();
-		DocumentBuilder docBuilder;
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder docBuilder;
 			docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
 			Element rootElement;
-			
+
 			// root elements
 			doc = ReadXmlFile(docBuilder, "resources/MotionLogning.xml");
-			
-			if(doc == null){
+
+			if (doc == null) {
 				doc = docBuilder.newDocument();
 				rootElement = doc.createElement("MedReminder");
 				doc.appendChild(rootElement);
-			}
-			else{
+			} else {
 				rootElement = doc.getDocumentElement();
 			}
-	
+
 			// MagneticHandler elements
 			Element MagneticHandler = doc.createElement("MotionHandler");
 			rootElement.appendChild(MagneticHandler);
 
-//			set attribute to staff element
-//			Attr attr = doc.createAttribute("id");
-//			attr.setValue("1");
-//			MagneticHandler.setAttributeNode(attr);
+			// set attribute to staff element
+			// Attr attr = doc.createAttribute("id");
+			// attr.setValue("1");
+			// MagneticHandler.setAttributeNode(attr);
 
 			// Date elements
 			Element Date = doc.createElement("Date");
@@ -106,36 +102,37 @@ public class Logning {
 		}
 		return null;
 	}
-	private Document GenerateDocumentForMagneticHandler(Date date, State state, int points) {
-		
+
+	private Document GenerateDocumentForMagneticHandler(Date date, State state,
+			int points) {
+
 		try {
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory
-				.newInstance();
-		DocumentBuilder docBuilder;
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder docBuilder;
 			docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
 			Element rootElement;
-			
+
 			// root elements
 			doc = ReadXmlFile(docBuilder, "resources/MagneticLoggning.xml");
-			
-			if(doc == null){
+
+			if (doc == null) {
 				doc = docBuilder.newDocument();
 				rootElement = doc.createElement("MedReminder");
 				doc.appendChild(rootElement);
-			}
-			else{
+			} else {
 				rootElement = doc.getDocumentElement();
 			}
-	
+
 			// MagneticHandler elements
 			Element MagneticHandler = doc.createElement("MagneticHandler");
 			rootElement.appendChild(MagneticHandler);
 
-//			set attribute to staff element
-//			Attr attr = doc.createAttribute("id");
-//			attr.setValue("1");
-//			MagneticHandler.setAttributeNode(attr);
+			// set attribute to staff element
+			// Attr attr = doc.createAttribute("id");
+			// attr.setValue("1");
+			// MagneticHandler.setAttributeNode(attr);
 
 			// Date elements
 			Element Date = doc.createElement("Date");

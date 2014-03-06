@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.sttapc.medreminder.context.LifeCycle;
 import org.sttapc.medreminder.handlers.MagneticHandler;
 import org.sttapc.medreminder.handlers.MotionHandler;
 
@@ -20,10 +21,15 @@ public class Initializer {
 	private MotionHandler motionHandler;
 	private MagneticHandler magneticHandler;
 	private Configurator configurator;
-	private String jsonConfigPath = "resources/configurator.json";
+	private String jsonConfigPath = "resources/configurator1.json";
+	private LifeCycle lifeCycle;
 
 	public Configurator getConfigurator() {
 		return configurator;
+	}
+
+	public void setConfigurator(Configurator conf) {
+		configurator = conf;
 	}
 
 	/**
@@ -81,16 +87,19 @@ public class Initializer {
 		interfaceKitPhidget.addSensorChangeListener(motionHandler
 				.getSensorChangeListener());
 	}
-	
-	public void setupMagneticSensor() throws PhidgetException, IOException{
+
+	public void setupMagneticSensor() throws PhidgetException, IOException {
 		if (interfaceKitPhidget == null) {
 			setupInterfaceKit();
 		}
 		if (configurator == null) {
 			setupConfigurator(jsonConfigPath);
 		}
-		
+
 		magneticHandler = new MagneticHandler(interfaceKitPhidget, configurator);
+		// magneticHandler.AttachMagneticHandler();
+		interfaceKitPhidget.addInputChangeListener(magneticHandler
+				.getInputChangeListener());
 	}
 
 	/**
@@ -101,11 +110,25 @@ public class Initializer {
 			setupConfigurator(jsonConfigPath);
 			setupInterfaceKit();
 			setupMotionSensor();
+			setupMagneticSensor();
+			lifeCycle = new LifeCycle(configurator);
 		} catch (Exception e) {
 			System.out.println("An error occurred: " + e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 
 		return true;
 	}
+
+	public void StartSystem() {
+		lifeCycle.startLifeCycle();
+		try {
+			interfaceKitPhidget.openAny();
+		} catch (PhidgetException e) {
+			System.out.println("An error occurred: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
 }
