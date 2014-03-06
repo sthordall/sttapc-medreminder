@@ -5,8 +5,8 @@ public class Program {
 
 	// public static void main(String[] args) {
 	//
-	// MakeSound makeSound = new MakeSound();
-	// makeSound.playSound("resources/nearbyActiveSound.wav");
+	// Reminder reminder = new Reminder();
+	// reminder.NearbyActiveReminder();
 	// // Configurator configurator = new Configurator();
 	// // configurator.setSchedule(new Schedule(new Date()));
 	// // configurator.setLogning(new Logning());

@@ -21,7 +21,7 @@ public class Initializer {
 	private MotionHandler motionHandler;
 	private MagneticHandler magneticHandler;
 	private Configurator configurator;
-	private String jsonConfigPath = "resources/configurator1.json";
+	private String jsonConfigPath = "resources/configurator.json";
 	private LifeCycle lifeCycle;
 
 	public Configurator getConfigurator() {
