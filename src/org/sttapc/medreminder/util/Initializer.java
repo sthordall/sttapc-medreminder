@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.sttapc.medreminder.handlers.MagneticHandler;
 import org.sttapc.medreminder.handlers.MotionHandler;
 
 import com.google.gson.Gson;
@@ -17,6 +18,7 @@ import com.phidgets.PhidgetException;
 public class Initializer {
 	private InterfaceKitPhidget interfaceKitPhidget;
 	private MotionHandler motionHandler;
+	private MagneticHandler magneticHandler;
 	private Configurator configurator;
 	private String jsonConfigPath = "resources/configurator.json";
 
@@ -78,7 +80,17 @@ public class Initializer {
 		motionHandler = new MotionHandler(configurator);
 		interfaceKitPhidget.addSensorChangeListener(motionHandler
 				.getSensorChangeListener());
-
+	}
+	
+	public void setupMagneticSensor() throws PhidgetException, IOException{
+		if (interfaceKitPhidget == null) {
+			setupInterfaceKit();
+		}
+		if (configurator == null) {
+			setupConfigurator(jsonConfigPath);
+		}
+		
+		magneticHandler = new MagneticHandler(interfaceKitPhidget, configurator);
 	}
 
 	/**

@@ -55,7 +55,7 @@ public class MagneticHandler {
 	}
 	
 
-	/*------------------------------Constructors-------------------------------------------*/
+	/*------------------------------Business Logic Methods---------------------------------*/
 
 	/**
 	 * Private method to initialize the input and attach a listener to the input
@@ -73,8 +73,9 @@ public class MagneticHandler {
 			// Do something here..logging and notify that the user has opened
 			// the
 			// case and thereby taken his medicine?
-			CaseIsOpened(arg0.getState());
-			IfCaseIsClosedRightAfter();
+			//CaseIsOpened(arg0.getState());
+			//IfCaseIsClosedRightAfter();
+			HandleState();
 		}
 	};
 	
@@ -123,6 +124,12 @@ public class MagneticHandler {
 		 * Maybe Log it ?
 		 */
 		case IDLE:
+			try {
+				logning.LogForMagneticHandler(currentTime, State.IDLE, 9999);
+			} catch (TransformerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		/*
 		 * If the user opens in WARNING state, he is outside of the schedule for
@@ -130,7 +137,13 @@ public class MagneticHandler {
 		 * */
 		case WARNING:
 			StateProvider.getInstance().setState(org.sttapc.medreminder.context.State.IDLE);
-			break;
+			try {
+				logning.LogForMagneticHandler(currentTime, State.WARNING, adherence.CalculatePoints(currentTime));
+			} catch (TransformerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				break;
 		default:
 			break;
 		

@@ -17,6 +17,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import org.jdom2.output.XMLOutputter;
 import org.sttapc.medreminder.util.Configurator;
 
 public class Logning {
@@ -43,16 +44,16 @@ public class Logning {
 		System.out.println("File saved!");
 	}
 	
-//	private Element ReadXmlFile(DocumentBuilder docBuilder){
-//        Document document;
-//		try {
-//			document = docBuilder.parse("resources/MagneticLoggning.xml");
-//			return document.getDocumentElement();
-//		} catch (Exception e) {
-//			return null;
-//
-//		}
-//	}
+	private Document ReadXmlFile(DocumentBuilder docBuilder){
+        Document document;
+		try {
+			document = docBuilder.parse("resources/MagneticLoggning.xml");
+			return document;
+		} catch (Exception e) {
+			return null;
+
+		}
+	}
 
 	private Document GenerateDocumentForMagneticHandler(Date date, State state, int points) {
 		
@@ -62,15 +63,27 @@ public class Logning {
 		DocumentBuilder docBuilder;
 			docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.newDocument();
+			Element rootElement;
 			
 			// root elements
-//			Element rootElement = ReadXmlFile(docBuilder);
+			doc = ReadXmlFile(docBuilder);
 			
+			//System.out.println(doc.toString());
+					
 //			if(rootElement == null){
 //				rootElement= doc.createElement("MedReminder");
 //			}
-			Element rootElement = doc.createElement("MedReminder");
-			doc.appendChild(rootElement);
+			if(doc == null){
+				doc = docBuilder.newDocument();
+				rootElement = doc.createElement("MedReminder");
+				doc.appendChild(rootElement);
+			}
+			else{
+				rootElement = doc.getDocumentElement();
+			}
+				
+			
+
 
 			// MagneticHandler elements
 			Element MagneticHandler = doc.createElement("MagneticHandler");
