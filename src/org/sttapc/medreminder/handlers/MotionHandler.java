@@ -2,6 +2,7 @@ package org.sttapc.medreminder.handlers;
 
 import java.util.Date;
 
+import org.sttapc.medreminder.context.Logning;
 import org.sttapc.medreminder.context.State;
 import org.sttapc.medreminder.context.StateProvider;
 import org.sttapc.medreminder.util.Configurator;
@@ -30,6 +31,7 @@ public class MotionHandler {
 
 	private StateProvider stateProvider;
 	private Reminder reminder;
+	private Logning logning;
 
 	private SensorChangeListener sensorChangeListener = new SensorChangeListener() {
 
@@ -50,24 +52,31 @@ public class MotionHandler {
 		sensitivityReset = configurator.getMotionSensitivityReset();
 		stateProvider = StateProvider.getInstance();
 		reminder = configurator.getReminder();
+		logning = configurator.getLogning();
 		latestDetectionDate = new Date();
 		detectionCounter = 0;
 	}
 
 	private void HandleEvent(State state) {
 		System.out.println("MotionHandler: Handling motion - " + state);
-		switch (state) {
-		case IDLE:
-
-			break;
-		case ACTIVE:
-			reminder.NearbyActiveReminder();
-			break;
-		case WARNING:
-			reminder.NearbyWarningReminder();
-			break;
-		default:
-			break;
+		try {
+			switch (state) {
+			case IDLE:
+				break;
+			case ACTIVE:
+				logning.LogForMotionHandler(new Date(), state);
+				reminder.NearbyActiveReminder();
+				break;
+			case WARNING:
+				logning.LogForMotionHandler(new Date(), state);
+				reminder.NearbyWarningReminder();
+				break;
+			default:
+				break;
+			}
+		} catch (Exception e) {
+			System.out.println("An error occurred: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

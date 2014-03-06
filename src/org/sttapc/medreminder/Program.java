@@ -1,22 +1,19 @@
 package org.sttapc.medreminder;
 
-import java.util.Date;
-
-import org.sttapc.medreminder.context.Logning;
-import org.sttapc.medreminder.context.Schedule;
-import org.sttapc.medreminder.util.Configurator;
-import org.sttapc.medreminder.util.Initializer;
+import org.sttapc.medreminder.util.MakeSound;
 
 public class Program {
 
 	public static void main(String[] args) {
 
-		Configurator configurator = new Configurator();
-		configurator.setSchedule(new Schedule(new Date()));
-		configurator.setLogning(new Logning());
-		Initializer initializer = new Initializer();
-		initializer.setConfigurator(configurator);
-		initializer.persistConfigurator("resources/configurator1.json");
+		MakeSound makeSound = new MakeSound();
+		makeSound.playSound("resources/nearbyActiveSound.wav");
+		// Configurator configurator = new Configurator();
+		// configurator.setSchedule(new Schedule(new Date()));
+		// configurator.setLogning(new Logning());
+		// Initializer initializer = new Initializer();
+		// initializer.setConfigurator(configurator);
+		// initializer.persistConfigurator("resources/configurator1.json");
 
 		//
 		// try {
