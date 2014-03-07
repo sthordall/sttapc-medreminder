@@ -4,17 +4,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import org.sttapc.medreminder.context.Schedule;
+import org.sttapc.medreminder.util.Configurator;
+import org.sttapc.medreminder.util.Initializer;
+import org.sttapc.medreminder.util.Reminder;
+
 public class Program {
 
 	public static void main(String[] args) {
 
 		try {
-			Scanner scanner = new Scanner(new File(
-					"resources/configurator.json"));
-			while (scanner.hasNext()) {
-				System.out.print(scanner.next());
-			}
-		} catch (FileNotFoundException e) {
+			Configurator configurator = new Configurator();
+			configurator.setSchedule(new Schedule());
+			configurator.setFilePath("");
+			configurator.setReminder(new Reminder(configurator));
+			Initializer initializer = new Initializer();
+			initializer.setConfigurator(configurator);
+			initializer.persistConfigurator("resources/configuratorNew.json");
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -73,6 +73,17 @@ public class Configurator {
 	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
 	}
+	
+	private String filePath;
+	
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
 
 	/*
 	 * General fields
