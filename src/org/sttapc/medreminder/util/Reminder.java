@@ -15,20 +15,35 @@ public class Reminder {
 
 	public void NearbyActiveReminder() throws IOException {
 		System.out.println("REMINDER: Patient Nearby - Take medication");
-		if(filePath == null){
-			filePath = "resources/nearbyActiveSound.sh";
+			filePath = "/usr/userapps/MedReminder/resources/nearbyActiveSound1.sh";
+		//Local TEST
+		//filePath = "resources/nearbyActiveSound.sh";
+		try {
+			System.out.println(filePath);
+			String[] cmd = new String[]{"/bin/sh", filePath};
+			Process pr = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		Process p = new ProcessBuilder(filePath).start();
 		//makeSound.playSound("resources/nearbyActiveSound.wav");
 	}
 
-	public void NearbyWarningReminder() throws IOException {
+	public void NearbyWarningReminder(int countOnSoundVolume) throws IOException {
 		System.out
 				.println("REMINDER: Patient Nearby - Warning, take medication now!");
-		if(filePath == null){
-			filePath = "resources/nearbyActiveSound.sh";
+			filePath = "/usr/userapps/MedReminder/resources/nearbyActiveSound" + countOnSoundVolume + ".sh";
+		//Local TEST
+		//filePath = "resources/nearbyActiveSound.sh";
+		try {
+			System.out.println(filePath);
+			String[] cmd = new String[]{"/bin/sh", filePath};
+			Process pr = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		Process p = new ProcessBuilder(filePath).start();
+		//makeSound.playSound("resources/nearbyActiveSound.wav");
 		//makeSound.playSound("resources/nearbyActiveSound.wav");
 	}
 }

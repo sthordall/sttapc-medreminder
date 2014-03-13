@@ -50,6 +50,7 @@ public class Initializer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(jsonString);
 		configurator = gson.fromJson(jsonString, Configurator.class);
 	}
 
@@ -128,6 +129,14 @@ public class Initializer {
 	}
 
 	public void StartSystem() {
+		System.out.println("System Started...");
+		try {
+			String[] cmd = new String[]{"/bin/sh", "/usr/userapps/MedReminder/resources/nearbyActiveSound5.sh"};
+			Process pr = Runtime.getRuntime().exec(cmd);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		lifeCycle.startLifeCycle();
 		try {
 			interfaceKitPhidget.openAny();
