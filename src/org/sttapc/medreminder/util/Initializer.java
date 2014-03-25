@@ -131,7 +131,9 @@ public class Initializer {
 	public void StartSystem() {
 		System.out.println("System Started...");
 		try {
-			String[] cmd = new String[]{"/bin/sh", "/usr/userapps/MedReminder/resources/nearbyActiveSound5.sh"};
+			String[] cmd = new String[] {
+					"/bin/sh",
+					"/Users/shiphter/repositories/github/STTAPC_MedReminder/resources/nearbyActiveSound.sh" };
 			Process pr = Runtime.getRuntime().exec(cmd);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
