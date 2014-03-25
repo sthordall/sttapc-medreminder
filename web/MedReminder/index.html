@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>CalmMind</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <style type="text/css">
+    body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    }
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+    ['Adherence', 'Amount'],
+    ['Ideal',  4],
+    ['Forgot',  1],
+    ['Late', 1],
+    ['Early', 1],
+    ]);
+    var options = {
+    legend: 'none',
+    pieSliceText: 'label',
+    pieStartAngle: 0,
+    chartArea:{left:10,top:10,width:"90%",height:"90%"},
+    height: 200,
+    width: 200
+    };
+    var chart = new google.visualization.PieChart(document.getElementById('chart'));
+    chart.draw(data, options);
+    }
+    </script>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+
+          <a class="brand" href="#">MedReminder</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#statistics">Statistics</a></li>
+              <li><a href="#configuration">Configuration</a></li>
+              <li><a href="#help">Help</a></li>
+            </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <!-- Main hero unit for a primary marketing message or call to action -->
+        <div class="hero-unit">
+          <h1>Good morning Kurt!</h1>
+          <p><i>Sunday 12:24 PM - Next pill at 18:00</i></p>
+        </div>
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="span4" id="adherence-overview">
+            <h2>Adherence</h2>
+            <p>Your adherence levels are getting better! Here are the latest weeks results:</p>
+            <div id="chart"></div>
+          </div>
+          <div class="span4">
+            <h2>Schedule</h2>
+            <p>The following weeks reminders, </p>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>Time</th>
+                  <th>Pills</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Monday</td>
+                  <td>17:45</td>
+                  <td>Red, blue, black</td>
+                </tr>
+                <tr>
+                  <td>Tuesday</td>
+                  <td>19:00</td>
+                  <td>Red, blue</td>
+                </tr>
+                <tr>
+                  <td>Wednesday</td>
+                  <td>19:00</td>
+                  <td>Red, blue</td>
+                </tr>
+                <tr>
+                  <td>Thursday</td>
+                  <td>19:00</td>
+                  <td>Red, blue, black</td>
+                </tr>
+                <tr>
+                  <td>Friday</td>
+                  <td>17:00</td>
+                  <td>Pink, green, black</td>
+                </tr>
+              </tbody>
+             
+            </table>
+          <p><a class="btn" href="#">Change plans &raquo;</a></p>
+        </div>
+        <div class="span4">
+          <h2>Doctor's notes</h2>
+          <p>
+          <i>Received 12:46 - Monday:</i>
+          <br>
+          "Good job Kurt, your adherence level is better than ever!
+          Call me, and let's discuss the need for extra diabetes medication."
+          </p>
+          <hr>
+          <p>
+          <i>Received 14:46 - Tuesday, last week:</i>
+          <br>
+          "Good to see your consuming your newly prescribed medication accordingly! Call me if you need anything."
+          </p>
+          <p><a class="btn" href="#">Call doctor &raquo;</a></p>
+        </div>
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; Applied Pervasive Computing - 2014</p>
+      </footer>
+      </div> <!-- /container -->
+      <!-- Le javascript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="http://code.jquery.com/jquery.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+    </body>
+  </html>
